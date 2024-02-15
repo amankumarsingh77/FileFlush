@@ -1,7 +1,7 @@
 import React from 'react'
 import { GrStorage } from 'react-icons/gr';
-import { IoCloudUploadOutline,IoSync,IoSettingsOutline   } from 'react-icons/io5';
-import { MdOutlineDevices, MdOutlineImportantDevices  } from 'react-icons/md';
+import { IoCloudUploadOutline, IoSync, IoSettingsOutline } from 'react-icons/io5';
+import { MdOutlineDevices, MdOutlineImportantDevices } from 'react-icons/md';
 // import { IoMdSettings } from 'react-icons/io';
 
 
@@ -16,25 +16,25 @@ const Features = () => {
             icon: IoSync
         },
         {
-            name:"Cross-Platform Compatibility",
-            icon:MdOutlineDevices
+            name: "Cross-Platform Compatibility",
+            icon: MdOutlineDevices
         },
         {
-            name:"Customizable Settings",
-            icon:IoSettingsOutline
+            name: "Customizable Settings",
+            icon: IoSettingsOutline
         },
         {
-            name:"Storage Optimization",
-            icon:GrStorage
+            name: "Storage Optimization",
+            icon: GrStorage
         },
         {
-            name:"User-Friendly Interface",
-            icon:MdOutlineImportantDevices
+            name: "User-Friendly Interface",
+            icon: MdOutlineImportantDevices
         }
     ]
     return (
         <section className="text-gray-600 body-font">
-            <div className="container px-5 py-24 mx-auto" >
+            <div className="container px-5  mx-auto" >
                 <div className="text-center mb-20" >
                     <h1 className="sm:text-3xl text-2xl font-medium text-center title-font text-gray-900 mb-4">Features</h1>
                     <p className="text-base leading-relaxed xl:w-2/4 lg:w-3/4 mx-auto">The website is still under beta version. Not all features might work as expected.</p>
@@ -50,9 +50,9 @@ const Features = () => {
                             </div>
                         )
                     })}
-                    
+
                 </div>
-                <button className="flex mx-auto mt-16 text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">Button</button>
+                {/* <button className="flex mx-auto mt-16 text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">Button</button> */}
             </div>
         </section>
     )
