@@ -4,13 +4,9 @@ import Headers from "./components/Headers";
 import Features from "./components/Features";
 import Statistics from "./components/Statistics";
 import Link from "next/link";
+import { getSignedURL } from "./create/actions";
 
 export default function Home() {
-  // const getdata = async () => {
-  //   const data = await fetch("https://fakestoreapi.com/products/1")
-  //   console.log(await data.json());
-  // }
-  // getdata()
 
   return (
     <div>
