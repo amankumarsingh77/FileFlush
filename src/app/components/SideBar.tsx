@@ -2,22 +2,21 @@
 import { UserButton, useUser } from "@clerk/nextjs";
 import { ChevronFirst, ChevronLast, MoreVertical } from "lucide-react";
 import Link from "next/link";
-import {  createContext, useContext, useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
+import {  createContext, useContext, useEffect, useMemo, useState } from "react";
+import { navitems } from "../helpers/navitem";
 
-interface SideBarItem {
-    icon: any,
-    text: string,
-    active: boolean,
-    alert: any,
-    route: string
-}
 
-const SidebarContext = createContext();
 
-export default function SideBar({ children }: any) {
-    const { isSignedIn, user, isLoaded } = useUser();
+const SidebarContext = createContext<any>(null);
+
+export default function SideBar() {
+    const { isSignedIn, user } = useUser();
     const [emailAddress, setEmailAddress]= useState<string>("");
     const [fullname, setFullname] = useState("");
+    const pathname = usePathname();
+    
+    
     useEffect(()=>{ 
         if(isSignedIn){
             setEmailAddress(user?.emailAddresses[0].emailAddress);
@@ -26,10 +25,8 @@ export default function SideBar({ children }: any) {
 
     },[user])
     
-    
-    
-    
     const [expanded, setExpanded] = useState(false);
+    if(pathname != "/"){
     return (
         <aside className="h-screen">
             <nav className="h-full inline-flex flex-col bg-white border-r shadow-sm">
@@ -49,7 +46,13 @@ export default function SideBar({ children }: any) {
                 </div>
 
                 <SidebarContext.Provider value={{ expanded }}>
-                    <ul className="flex-1 px-3">{children}</ul>
+                    <ul className="flex-1 px-3">
+                        {navitems.map((item)=>{
+                            return (
+                                <SideBarItems key={item.route} item={item}/>
+                            )
+                        })}
+                    </ul>
                 </SidebarContext.Provider>
 
                 <div className="border-t flex p-3">
@@ -72,28 +75,42 @@ export default function SideBar({ children }: any) {
         </aside>
     )
 }
-export function SideBarItems({ icon, text, active, alert, route }: SideBarItem) {
+
+    
+}
+export function SideBarItems({item}:any) {
     const { expanded } = useContext(SidebarContext);
+    const pathname = usePathname();
+    console.log(item);
+    
+    const isActive = useMemo(() => {
+       
+        
+          if (item.route === pathname) {
+            return true;
+          }
+        return item.route === pathname;
+      }, [item, item.route, pathname]);
     return (
-        <Link href={route}
+        <Link href={item.route}
             className={`
             relative flex items-center py-2 px-3 my-1
             font-medium rounded-md cursor-pointer
             transition-colors group
-            ${active
+            ${isActive
                     ? "bg-gradient-to-tr from-indigo-200 to-indigo-100 text-indigo-800"
                     : "hover:bg-indigo-50 text-gray-600"
                 }
         `}
         >
-            {icon}
+            <item.icon/>
             <span
                 className={`overflow-hidden transition-all ${expanded ? "w-52 ml-3" : "w-0"
                     }`}
             >
-                {text}
+                {item.text}
             </span>
-            {alert && (
+            {item.alert && (
                 <div
                     className={`absolute right-2 w-2 h-2 rounded bg-indigo-400 ${expanded ? "" : "top-2"
                         }`}
@@ -109,9 +126,10 @@ export function SideBarItems({ icon, text, active, alert, route }: SideBarItem) 
               group-hover:visible group-hover:opacity-100 group-hover:translate-x-0
           `}
                 >
-                    {text}
+                    {item.text}
                 </div>
             )}
         </Link>
     )
+    
 }

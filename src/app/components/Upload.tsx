@@ -2,7 +2,7 @@
 import React from 'react'
 import { FileWithPath, useDropzone } from 'react-dropzone';
 import { CiSquarePlus } from 'react-icons/ci';
-import { getSignedURL } from '../create/actions';
+import { getSignedURL } from '../helpers/create/actions';
 import { useUser } from '@clerk/nextjs';
 
 const Upload = () => {
@@ -14,17 +14,23 @@ const Upload = () => {
     name: file.name,
     type: file.type
   }));
-  const getdata = async () => {
+  const upload = async () => {
+     // If file.path is undefined, set it to an empty string
+    const username = user?.username ?? '';
     if(files){
-      const file = files[0];
-      const {signedUrl} = await getSignedURL(file.name,user?.username);
-      fetch(signedUrl,{
-        method:"PUT",
-        body:JSON.stringify(file),
-        headers:{
-          "Content-Type":file.type
-        }
+      files.map(async (file)=>{
+        const filePath = file.path ?? '';
+        const { signedUrl } = await getSignedURL(filePath?.replace(/\//g, ""), username);
+
+        fetch(signedUrl,{
+          method:"PUT",
+          body:JSON.stringify(file),
+          headers:{
+            "Content-Type":file.type
+          }
       })
+      })
+      
 
       
     }
@@ -50,7 +56,7 @@ const Upload = () => {
             
           )
         })}
-        <button onClick={getdata}>Upload</button>
+        <button onClick={upload}>Upload</button>
         {/* <ul>{files[0]}</ul> */}
       </aside>
     </div>
