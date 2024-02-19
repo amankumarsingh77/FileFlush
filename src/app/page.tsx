@@ -1,10 +1,10 @@
-import Image from "next/image";
-import { UserButton } from "@clerk/nextjs";
+
 import Headers from "./components/Headers";
 import Features from "./components/Features";
 import Statistics from "./components/Statistics";
 import Link from "next/link";
-import { getSignedURL } from "./create/actions";
+import Steps from "./components/Steps";
+import { CarouselHome } from "./components/CarouselHome";
 
 export default function Home() {
 
@@ -30,6 +30,13 @@ export default function Home() {
         </div>
         <div className=" h-full">
           <Statistics />
+        </div>
+        <div>
+        <CarouselHome/>
+        </div>
+        <div>
+          
+          <Steps/>
         </div>
       </main>
     </div>

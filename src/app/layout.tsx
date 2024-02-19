@@ -2,6 +2,10 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";  
 import { ClerkProvider } from '@clerk/nextjs'
+import SideBar from "./components/SideBar";
+import { Inter as FontSans } from "next/font/google"
+import { NextUIProvider } from "@nextui-org/react";
+
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,10 +20,21 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
+    
     <ClerkProvider>
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={`${inter.className} m-0`}>
+      
+      <div className="flex h-screen w-full ">
+        <SideBar/>
+        <div className="flex flex-col w-full h-full ">
+            {children}
+          </div>
+      </div>
+      </body>
     </html>
+
     </ClerkProvider>
+   
   );
 }
