@@ -11,6 +11,7 @@ export function CarouselHome() {
         {cloudproviders.map((cloud) => {
           return (
             <Card
+              key={cloud.name}
               isFooterBlurred
               radius="lg"
               className="border-none"
