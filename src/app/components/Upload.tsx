@@ -60,7 +60,7 @@ const Upload = () => {
         <h4>Files</h4>
         {files.map((file)=>{
           return(
-            <ul>{file.path}{file.size}</ul>
+            <ul key={file.name}>{file.path}{file.size}</ul>
             
           )
         })}

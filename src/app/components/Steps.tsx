@@ -9,7 +9,7 @@ const Steps = () => {
             id: 1,
             icon: FiUserPlus,
             name: "Create An Account",
-            description: "It's just a click of a button to signup to our service."
+            description: "Its just a click of a button to signup to our service."
         },
         {
             id: 2,
@@ -37,7 +37,7 @@ const Steps = () => {
                 
                 {steps.map((step) => {
                     return (
-                        <div className="flex relative pt-10 pb-20 sm:items-center md:w-2/3 mx-auto" >
+                        <div className="flex relative pt-10 pb-20 sm:items-center md:w-2/3 mx-auto" key={step.id}>
                             <div className="h-full w-6 absolute left-0 inset-0 flex items-center justify-center" >
                                 <div className="h-full w-1 bg-gray-200 pointer-events-none" ></div>
                             </div>

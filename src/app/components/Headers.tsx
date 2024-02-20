@@ -34,7 +34,7 @@ const Headers = () => {
         <nav className="md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center max-sm:hidden">
           {links.map((link) => {
             return (
-              <Link href={link.href} className="mr-5 hover:text-gray-900">{link.name}</Link>
+              <Link key={link.name} href={link.href} className="mr-5 hover:text-gray-900">{link.name}</Link>
             )
           })}
 
