@@ -28,7 +28,7 @@ const Features = () => {
             icon: GrStorage
         },
         {
-            name: "User-Friendly Interface",
+            name: "User Friendly Interface",
             icon: MdOutlineImportantDevices
         }
     ]
