@@ -17,13 +17,13 @@ export default function SideBar() {
     const pathname = usePathname();
     
     
-    useEffect(()=>{ 
-        if(isSignedIn){
-            setEmailAddress(user?.emailAddresses[0].emailAddress);
-            setFullname(user?.fullName)
+    useEffect(() => { 
+        if (isSignedIn && user) {
+            setEmailAddress(user.emailAddresses[0]?.emailAddress ?? '');
+            setFullname(user.fullName ?? '');
         }
-
-    },[user])
+    }, [isSignedIn, user]);
+    
     
     const [expanded, setExpanded] = useState(false);
     if(pathname != "/"){
