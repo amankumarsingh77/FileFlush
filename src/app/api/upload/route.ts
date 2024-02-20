@@ -30,11 +30,7 @@ async function uploadFileToS3(file: Buffer, folder: string, fileName: string, fi
 }
 
 
-export const config = {
-    api: {
-        bodyParser: false,
-    },
-};
+
 
 
 export async function POST(req: Request, res:Response) {
