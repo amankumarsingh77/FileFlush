@@ -1,6 +1,5 @@
 import { S3Client, PutObjectCommand, S3ClientConfig } from "@aws-sdk/client-s3";
-import { NextApiRequest, NextApiResponse } from "next";
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
 const s3Client = new S3Client({
     region: 'auto',
@@ -11,11 +10,11 @@ const s3Client = new S3Client({
     }
 });
 
-async function uploadFileToS3(file: Buffer, fileName: string): Promise<string> {
+async function uploadFileToS3(file: Buffer,folder:string, fileName: string): Promise<string> {
     try {
         const params = {
-            Bucket: 'YOUR_BUCKET_NAME',
-            Key: fileName,
+            Bucket: process.env.NEXT_PUBLIC_AWS_BUCKET_NAME,
+            Key: folder+"/"+fileName,
             Body: file,
         };
         const command = new PutObjectCommand(params);
@@ -39,12 +38,12 @@ export const config = {
 };
 
 
-export default async function POST(req: Request, res:NextApiResponse) {
+export default async function POST(req: Request, res:Response) {
     try {
-        const data  = req.body;
+        const {file,folder,fileName}  =await req.json();
         // const id = await createItem(data)
         // const formData = await req.formData();
-        console.log(data);
+        console.log("Body"+file,folder,fileName);
         
 
         // if (!file || !(file instanceof File)) { // Check if file exists and is an instance of File
@@ -52,12 +51,12 @@ export default async function POST(req: Request, res:NextApiResponse) {
         // }
 
         // const buffer = Buffer.from(await file.arrayBuffer());
-        // const fileName = await uploadFileToS3(buffer, file.name);
-        return res.json({ message: "success" });
+        // const resp = await uploadFileToS3(buffer,folder, fileName);
+        return NextResponse.json({ message: "success:"} );
 
     } catch (error) {
         console.error("Error:", error);
-        return res.json({ error: "Unable to upload data" });
+        return NextResponse.json({ error: "Unable to upload data" });
     }
 }
 

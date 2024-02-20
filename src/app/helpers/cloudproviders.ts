@@ -25,8 +25,14 @@ export const cloudproviders = [
         available:true
     },
     {
+        name:"Wasabi",
+        image:"/wasabi.png",
+        available:true
+    },
+    {
         name:"PCloud",
         image:"/Pcloud.png",
         available: false
     },
+    
 ]

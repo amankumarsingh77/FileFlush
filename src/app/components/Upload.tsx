@@ -4,37 +4,45 @@ import { FileWithPath, useDropzone } from 'react-dropzone';
 import { CiSquarePlus } from 'react-icons/ci';
 import { getSignedURL } from '../helpers/create/actions';
 import { useUser } from '@clerk/nextjs';
-
+import { File } from 'buffer';
 const Upload = () => {
   const { acceptedFiles, getRootProps, getInputProps, isDragActive } = useDropzone();
   const { isSignedIn, user, isLoaded } = useUser();
-  const files = acceptedFiles.map((file:FileWithPath) => ({
-    path: file.path,
-    size: file.size,
-    name: file.name,
-    type: file.type
-  }));
+  
+  
+  const files = acceptedFiles.map((file: FileWithPath) => {
+    // const arrayBuffer = Buffer.from(file.arrayBuffer());
+    // const uint8Array = new Uint8Array(arrayBuffer);
+
+    return {
+      path: file.path,
+      size: file.size,
+      name: file.name,
+      type: file.type,
+      data: file.arrayBuffer()
+    };
+  });
+  
   const upload = async () => {
-     // If file.path is undefined, set it to an empty string
     const username = user?.username ?? '';
-    if(files){
-      files.map(async (file)=>{
-        const filePath = file.path ?? '';
-        const { signedUrl } = await getSignedURL(filePath?.replace(/\//g, ""), username);
-
-        fetch(signedUrl,{
-          method:"PUT",
-          body:JSON.stringify(file),
-          headers:{
-            "Content-Type":file.type
-          }
-      })
-      })
-      
-
-      
+    
+    if (files) {
+      for (const file of files) {
+        const buffer = Buffer.from(await file.data);
+        const resp = await fetch("http://localhost:3000/api/upload", {
+          method: "POST",
+          body: JSON.stringify({
+            file: buffer,
+            folder: username,
+            fileName: (await file).name,
+            fileType: (await file).type,
+            fileSize: (await file).size
+          })
+        });
+      }
     }
-  }
+  };
+  
   
   return (
     <div>
