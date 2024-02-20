@@ -81,7 +81,7 @@ export default function SideBar() {
 export function SideBarItems({item}:any) {
     const { expanded } = useContext(SidebarContext);
     const pathname = usePathname();
-    console.log(item);
+    
     
     const isActive = useMemo(() => {
        
