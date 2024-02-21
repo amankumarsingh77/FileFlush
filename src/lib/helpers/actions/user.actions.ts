@@ -7,7 +7,7 @@ import { connectToDatabase } from "../database/mongo";
 import { handleError } from "../../utils";
 
 // CREATE
-export async function createUser(user: CreateUserParams) {
+export async function createUser(user: any) {
   try {
     await connectToDatabase();
 
