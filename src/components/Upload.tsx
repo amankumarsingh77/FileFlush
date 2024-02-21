@@ -29,7 +29,7 @@ const Upload = () => {
     if (files) {
       for (const file of files) {
         const buffer = Buffer.from(await file.data);
-        const resp = await fetch("http://localhost:3000/api/upload", {
+        const resp = await fetch("/api/upload", {
           method: "POST",
           body: JSON.stringify({
             file: buffer,
