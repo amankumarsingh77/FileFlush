@@ -1,10 +1,10 @@
 
-import Headers from "./components/Headers";
-import Features from "./components/Features";
-import Statistics from "./components/Statistics";
+import Headers from "../components/Headers";
+import Features from "../components/Features";
+import Statistics from "../components/Statistics";
 import Link from "next/link";
-import Steps from "./components/Steps";
-import { CarouselHome } from "./components/CarouselHome";
+import Steps from "../components/Steps";
+import { CarouselHome } from "../components/CarouselHome";
 
 export default function Home() {
 
@@ -32,11 +32,11 @@ export default function Home() {
           <Statistics />
         </div>
         <div>
-        <CarouselHome/>
+          <CarouselHome />
         </div>
         <div>
-          
-          <Steps/>
+
+          <Steps />
         </div>
       </main>
     </div>

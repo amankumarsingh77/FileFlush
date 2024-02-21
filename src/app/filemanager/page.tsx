@@ -1,13 +1,13 @@
 import React from 'react'
-import SideBar from '../components/SideBar'
+import SideBar from '../../components/SideBar'
 import { useRouter } from 'next/router';
 
 const page = () => {
-    // const router = useRouter();
+  // const router = useRouter();
   return (
-    
+
     <div>
-        {/* <SideBar router={router}/> */}
+      {/* <SideBar router={router}/> */}
     </div>
   )
 }
