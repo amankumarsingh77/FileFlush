@@ -1,7 +1,7 @@
 import * as React from "react"
 
 import { Card, CardFooter, Image, Button } from "@nextui-org/react";
-import { cloudproviders } from "../helpers/cloudproviders";
+import { cloudproviders } from "../lib/helpers/cloudproviders";
 export function CarouselHome() {
   return (
     <div className="p-3 mb-5">

@@ -1,5 +1,5 @@
 // import { User } from "@clerk/nextjs/server"
-import clientPromise from "@/app/helpers/mono";
+import clientPromise from "@/lib/helpers/mono";
 import { NextApiRequest, NextApiResponse } from "next";
 
 let client:any;
