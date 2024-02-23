@@ -34,7 +34,7 @@ const Upload = () => {
           body: JSON.stringify({
             file: buffer,
             folder: username,
-            fileName: (await file).name,
+            filePath: (await file).path,
             fileType: (await file).type,
             fileSize: (await file).size
           })

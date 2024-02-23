@@ -5,6 +5,9 @@ import { ClerkProvider } from '@clerk/nextjs'
 import SideBar from "../components/SideBar";
 import { Inter as FontSans } from "next/font/google"
 import { NextUIProvider } from "@nextui-org/react";
+import { SessionProvider } from "next-auth/react";
+import AuthProvider from "./components/AuthProvider";
+
 
 
 const inter = Inter({ subsets: ["latin"] });
@@ -22,17 +25,22 @@ export default function RootLayout({
   return (
 
     <ClerkProvider>
+    
       <html lang="en">
+      {/* <SessionProvider> */}
         <body className={`${inter.className} m-0`}>
-
+          {/* <AuthProvider> */}
           <div className="flex h-screen w-full ">
             <SideBar />
             <div className="flex flex-col w-full h-full ">
               {children}
             </div>
           </div>
+          {/* </AuthProvider> */}
         </body>
+        {/* </SessionProvider>   */}
       </html>
+      
 
     </ClerkProvider>
 

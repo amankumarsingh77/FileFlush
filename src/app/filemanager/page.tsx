@@ -1,13 +1,14 @@
 import React from 'react'
-import SideBar from '../../components/SideBar'
-import { useRouter } from 'next/router';
+import AddCloudCard from '@/components/addcloud/AddCloudCard';
+
 
 const page = () => {
   // const router = useRouter();
   return (
 
     <div>
-      {/* <SideBar router={router}/> */}
+      <AddCloudCard/>
+      
     </div>
   )
 }
