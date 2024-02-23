@@ -15,7 +15,9 @@ export default function Home() {
 
         <section className="text-gray-600 body-font">
           <div className="container mx-auto flex px-5 py-24 items-center justify-center flex-col" >
+
             <div className="text-center lg:w-2/3 w-full">
+
               <h1 className="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-900">Sync your data to your favourite cloud Providers</h1>
               <p className="mb-8 leading-relaxed">Introducing FileFlush, your hassle-free solution for seamless file synchronization across multiple cloud platforms. With FileFlush, users can upload their files just once, and our advanced synchronization technology ensures that those files are instantly mirrored across their chosen cloud providers.</p>
               <div className="flex justify-center" >

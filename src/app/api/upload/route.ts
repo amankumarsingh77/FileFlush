@@ -10,19 +10,19 @@ const s3Client = new S3Client({
     }
 });
 
-async function uploadFileToS3(file: Buffer, folder: string, fileName: string, fileType: string, size: number) {
+async function uploadFileToS3(file: Buffer, folder: string, filePath: string, fileType: string, size: number) {
     try {
         const params = {
             Bucket: process.env.NEXT_PUBLIC_AWS_BUCKET_NAME,
-            Key: folder + "/" + fileName,
+            Key: folder + "/" + filePath.replace(/^\/+/, ""),
             Body: file,
             ContentType: fileType,
             ContentLength: size // Add ContentLength property
         };
         const command = new PutObjectCommand(params);
         await s3Client.send(command);
-        console.log(`File uploaded successfully to S3: ${fileName}`);
-        return fileName;
+        console.log(`File uploaded successfully to S3: ${filePath}`);
+        return filePath;
     } catch (error) {
         console.error("Error uploading file to S3:", error);
         throw error;
@@ -35,13 +35,13 @@ async function uploadFileToS3(file: Buffer, folder: string, fileName: string, fi
 
 export async function POST(req: Request, res:Response) {
     try {
-        const { file, folder, fileName, fileType,fileSize }: { file: Buffer, folder: string, fileName: string, fileType:string, fileSize:number } = await req.json();
+        const { file, folder, filePath, fileType,fileSize }: { file: Buffer, folder: string, filePath: string, fileType:string, fileSize:number } = await req.json();
         // console.log(fi instanceof Buffer);
         
         // if (!file || !(file instanceof Buffer)) { // Check if file exists and is an instance of File
         //     return NextResponse.json({ error: "File is required" });
         // }
-        const resp = await uploadFileToS3(file,folder, fileName,fileType, fileSize );
+        const resp = await uploadFileToS3(file,folder, filePath,fileType, fileSize );
         return NextResponse.json({ message: "success:"} );
 
     } catch (error) {

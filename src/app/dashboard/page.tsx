@@ -15,12 +15,6 @@ const page = () => {
 
       <main className="min-h-screen flex flex-row">
         <div className="">
-          {/* <SideBar>
-        <SideBarItems icon={<MdDashboard />} text="Dashboard" route="/dashboard" active />
-        <SideBarItems icon={<CiMoneyCheck1 />} text="Pricing" route='/pricing' alert  active />
-        <SideBarItems icon={<IoCloudUploadOutline />} text="AddCloud" route='/addcloud'  active />
-  
-        </SideBar> */}
         </div>
 
         <div className="flex flex-col flex-grow justify-between items-center">
