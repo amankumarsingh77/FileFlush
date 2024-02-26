@@ -1,18 +1,18 @@
 "use client"
-import React from 'react'
+import React, { useState } from 'react'
 import { FileWithPath, useDropzone } from 'react-dropzone';
 import { CiSquarePlus } from 'react-icons/ci';
 import { getSignedURL } from '../lib/helpers/actions/s3.actions';
 import { useUser } from '@clerk/nextjs';
-import { File } from 'buffer';
+import axios from 'axios';
+
 const Upload = () => {
   const { acceptedFiles, getRootProps, getInputProps, isDragActive } = useDropzone();
   const { isSignedIn, user, isLoaded } = useUser();
+  const [progress, setProgress] = useState(0);
 
 
   const files = acceptedFiles.map((file: FileWithPath) => {
-    // const arrayBuffer = Buffer.from(file.arrayBuffer());
-    // const uint8Array = new Uint8Array(arrayBuffer);
 
     return {
       path: file.path,
@@ -26,19 +26,36 @@ const Upload = () => {
   const upload = async () => {
     const username = user?.username ?? '';
 
+
     if (files) {
       for (const file of files) {
-        const buffer = Buffer.from(await file.data);
-        const resp = await fetch("/api/upload", {
-          method: "POST",
-          body: JSON.stringify({
-            file: buffer,
-            folder: username,
-            filePath: (await file).path,
-            fileType: (await file).type,
-            fileSize: (await file).size
-          })
-        });
+        const signedUrl = await getSignedURL(file.path || "", username)
+        const url = signedUrl.signedUrl
+        const data = await (file).data
+        await axios.put(url,data,{
+          headers: {
+            "Content-Type": file?.type || "application/octet-stream",
+          },
+          onUploadProgress: (progressEvent) => {
+            const total = progressEvent.total ?? 1;
+            const percentCompleted = Math.round((progressEvent.loaded * 100) / total);
+            setProgress(percentCompleted);
+            console.log(percentCompleted); // Handle the progress event as needed
+          }
+        })
+        console.log("uploaded successfully");
+        
+        // const buffer = Buffer.from(await file.data);
+        // const resp = await fetch("/api/upload", {
+        //   method: "POST",
+        //   body: JSON.stringify({
+        //     file: buffer,
+        //     folder: username,
+        //     filePath: (await file).path,
+        //     fileType: (await file).type,
+        //     fileSize: (await file).size
+        //   })
+        // });
       }
     }
   };
