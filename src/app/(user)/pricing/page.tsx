@@ -1,5 +1,5 @@
 import React from 'react'
-import { PricingDetails } from '../../lib/helpers/pricing'
+import { PricingDetails } from '../../../lib/helpers/pricing'
 const Page = () => {
     return (
         <section className="text-gray-600 body-font overflow-hidden">

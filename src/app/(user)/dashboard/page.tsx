@@ -1,8 +1,8 @@
 
 import { MdDashboard } from "react-icons/md"
-import Headers from "../../components/Headers"
-import SideBar, { SideBarItems } from "../../components/SideBar"
-import Upload from "../../components/Upload"
+import Headers from "../../../components/Headers"
+import SideBar, { SideBarItems } from "../../../components/SideBar"
+import Upload from "../../../components/Upload"
 import { CiMoneyCheck1 } from "react-icons/ci"
 import { currentUser } from "@clerk/nextjs"
 import { IoCloudUploadOutline } from "react-icons/io5"

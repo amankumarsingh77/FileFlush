@@ -5,11 +5,13 @@ import Statistics from "../components/Statistics";
 import Link from "next/link";
 import Steps from "../components/Steps";
 import { CarouselHome } from "../components/CarouselHome";
+import { SessionProvider } from "next-auth/react";
 
 export default function Home() {
 
   return (
     <div>
+      <SessionProvider>
       <Headers />
       <main className="flex min-h-screen flex-col">
 
@@ -41,6 +43,7 @@ export default function Home() {
           <Steps />
         </div>
       </main>
+      </SessionProvider>
     </div>
   );
 }

@@ -47,14 +47,17 @@ const UserSchema = new Schema({
   }],
   cloudProviders:[
     {
-      providerName: {
-        type: String,
-        enum: ['AWS S3', 'Google Drive', 'DropBox','OneDrive','Cloudflare R2','Wasabi','PCloud'],
-        required: true
+      id:{
+        type:Number,
+        required:true
       },
-      loginDetails: {
-        type:Object,
-        required:true// Add other necessary fields such as projectId, credentials file path, etc.
+      cloudName: {
+        type: String,
+        required: true,
+      },
+      token: {
+        type: String,
+        required: true,
       }
     }
   ]

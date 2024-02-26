@@ -1,12 +1,14 @@
 import { S3Client, PutObjectCommand, S3ClientConfig } from "@aws-sdk/client-s3";
+// import { createPresignedPost } from "@aws-sdk/s3-presigned-post";
+
 import { NextResponse } from "next/server";
 
 const s3Client = new S3Client({
     region: 'auto',
-    endpoint: process.env.NEXT_PUBLIC_AWS_ENDPOINT || '', // Make sure to handle undefined case
+    endpoint: process.env.NEXT_PUBLIC_AWS_ENDPOINT || '', 
     credentials: {
-        accessKeyId: process.env.NEXT_PUBLIC_AWS_ACCESS_KEY_ID || '', // Make sure to handle undefined case
-        secretAccessKey: process.env.NEXT_PUBLIC_AWS_SECRET_ACCESS_KEY || '', // Make sure to handle undefined case
+        accessKeyId: process.env.NEXT_PUBLIC_AWS_ACCESS_KEY_ID || '', 
+        secretAccessKey: process.env.NEXT_PUBLIC_AWS_SECRET_ACCESS_KEY || '', 
     }
 });
 
@@ -17,7 +19,7 @@ async function uploadFileToS3(file: Buffer, folder: string, filePath: string, fi
             Key: folder + "/" + filePath.replace(/^\/+/, ""),
             Body: file,
             ContentType: fileType,
-            ContentLength: size // Add ContentLength property
+            ContentLength: size 
         };
         const command = new PutObjectCommand(params);
         await s3Client.send(command);
