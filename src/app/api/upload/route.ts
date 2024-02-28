@@ -38,11 +38,6 @@ async function uploadFileToS3(file: Buffer, folder: string, filePath: string, fi
 export async function POST(req: Request, res:Response) {
     try {
         const { file, folder, filePath, fileType,fileSize }: { file: Buffer, folder: string, filePath: string, fileType:string, fileSize:number } = await req.json();
-        // console.log(fi instanceof Buffer);
-        
-        // if (!file || !(file instanceof Buffer)) { // Check if file exists and is an instance of File
-        //     return NextResponse.json({ error: "File is required" });
-        // }
         const resp = await uploadFileToS3(file,folder, filePath,fileType, fileSize );
         return NextResponse.json({ message: "success:"} );
 
