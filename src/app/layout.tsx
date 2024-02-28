@@ -6,7 +6,6 @@ import SideBar from "../components/SideBar";
 import { Inter as FontSans } from "next/font/google"
 import { NextUIProvider } from "@nextui-org/react";
 import { SessionProvider } from "next-auth/react";
-import AuthProvider from "./components/AuthProvider";
 
 
 
