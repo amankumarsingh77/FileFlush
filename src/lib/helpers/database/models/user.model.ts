@@ -55,9 +55,15 @@ const UserSchema = new Schema({
         type: String,
         required: true,
       },
-      token: {
-        type: String,
-        required: true,
+      credentials: {
+        accessKey:{
+          type:String,
+          required:true
+        },
+        secretAccessKey:{
+          type:String,
+          required:true
+        }
       }
     }
   ]

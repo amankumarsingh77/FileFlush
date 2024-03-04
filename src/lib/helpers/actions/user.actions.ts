@@ -6,6 +6,11 @@ import User from "../database/models/user.model";
 import { connectToDatabase } from "../database/mongo";
 import { handleError } from "../../utils";
 
+interface S3Credentials{
+  accesskey:string,
+  secretaccesskey:string
+}
+
 // CREATE
 export async function createUser(user: any) {
   try {
@@ -88,6 +93,22 @@ export async function updateCredits(userId: string, creditFee: number) {
 
     return JSON.parse(JSON.stringify(updatedUserCredits));
   } catch (error) {
+    handleError(error);
+  }
+}
+
+
+
+export async function addCloud(userId:string, credentials:S3Credentials){
+  try{
+    await connectToDatabase();
+    const addUserCloud= await User.findOneAndUpdate(
+      {clerkId:userId},
+      {$push:{cloudProviders:credentials}},
+      {new:true}
+    )
+    return addUserCloud ? JSON.parse(JSON.stringify(addUserCloud)) : null
+  }catch(error){
     handleError(error);
   }
 }
