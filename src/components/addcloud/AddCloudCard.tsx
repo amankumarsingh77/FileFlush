@@ -1,28 +1,28 @@
-'use client'
+"use client"
 import React, { useState } from "react";
-import { Checkbox, Link, User, Chip, cn } from "@nextui-org/react";
-import { signIn } from "next-auth/react"
+import { User, Chip } from "@nextui-org/react";
 import { cloudproviders } from "@/lib/constants/cloudproviders";
 import { CredentialCard } from "./CredentialCard";
+
+interface ProviderStates {
+  [key: string]: boolean;
+}
+
 export default function AddCloudCard() {
-
-  const [isSelected, setIsSelected] = React.useState(false);
-
-  const [isOpen, setIsOpen] = useState(false);
-  const [isdialogopen, setisdialogopen] = React.useState(false);
-
-        const handleAuthButtonClick = () => {
-          setisdialogopen(true);
-        };
-  
+  const [providerStates, setProviderStates] = useState<ProviderStates>({});
+  const handleAuthButtonClick = (providerId: number) => {
+    setProviderStates(prevState => ({
+      ...prevState,
+      [providerId]: true
+    }));
+  };
 
   return (
-
     <div className="flex flex-wrap gap-6 p-3">
       {cloudproviders.map((provider) => {
-
+        const isDialogOpen = providerStates[provider.id] || false;
         return (
-          <div key={provider.id} className="w-96 rounded-lg flex justify-between gap-2 cursor-pointer p-2 bg-gray-200" onClick={handleAuthButtonClick}>
+          <div key={provider.id} className="w-full max-w-96 rounded-lg flex justify-between gap-2 cursor-pointer p-2 bg-gray-200" onClick={() => handleAuthButtonClick(provider.id)}>
             <User avatarProps={{ size: "lg", src: provider.image }} name={provider.name} />
             <div className="flex flex-col items-end justify-center">
               {provider.available ? (
@@ -35,11 +35,10 @@ export default function AddCloudCard() {
                 </Chip>
               )}
             </div>
-            {isdialogopen && <CredentialCard setisdialogopen={setisdialogopen} provider={provider}  />}
+            {isDialogOpen && <CredentialCard setisdialogopen={setProviderStates} provider={provider} />}
           </div>
         );
       })}
     </div>
-
   );
 }

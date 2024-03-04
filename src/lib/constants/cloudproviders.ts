@@ -1,11 +1,12 @@
-export const cloudproviders = [
+export const cloudproviders:Provider[] = [
     {
         id:1,
         name:"Google Drive",
         image:"/google_drive.png",
         available:true,
         staus:"available",
-        authType:"oauth"
+        authType:"oauth",
+        credParams:[]
     },
     {
         id:2,
@@ -13,7 +14,8 @@ export const cloudproviders = [
         image:"/dropbox.png",
         available:true,
         staus:"available",
-        authType:"oauth"
+        authType:"oauth",
+        credParams:[]
     },
     {
         id:3,
@@ -39,7 +41,8 @@ export const cloudproviders = [
         image:"/cloudflare.svg",
         available:true,
         staus:"available",
-        authType:"credentials"
+        authType:"credentials",
+        credParams:['accessKeyId','secretAccessKey']
     },
     {
         id:6,
@@ -47,7 +50,8 @@ export const cloudproviders = [
         image:"/wasabi.png",
         available:true,
         staus:"available",
-        authType:"credentials"
+        authType:"credentials",
+        credParams:['accessKeyId','secretAccessKey']
     },
     {
         id:7,
@@ -55,7 +59,8 @@ export const cloudproviders = [
         image:"/Pcloud.png",
         available: false,
         staus:"available",
-        authType:"credentials"
+        authType:"credentials",
+        credParams:[]
     },
     
 ]

@@ -47,17 +47,27 @@ const UserSchema = new Schema({
   }],
   cloudProviders:[
     {
-      id:{
+      cloudId:{
         type:Number,
         required:true
       },
-      cloudName: {
+      name:{
+        type:String,
+        required:true
+      },
+      provider: {
         type: String,
         required: true,
       },
-      token: {
-        type: String,
-        required: true,
+      credentials: {
+        accesskey: {
+          type: String,
+          required: true,
+        },
+        secretaccesskey: {
+          type: String,
+          required: true,
+        }
       }
     }
   ]

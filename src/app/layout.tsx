@@ -24,23 +24,11 @@ export default function RootLayout({
   return (
 
     <ClerkProvider>
-    
       <html lang="en">
-      {/* <SessionProvider> */}
         <body className={`${inter.className} m-0`}>
-          {/* <AuthProvider> */}
-          <div className="flex h-screen w-full ">
-            <SideBar />
-            <div className="flex flex-col w-full h-full ">
               {children}
-            </div>
-          </div>
-          {/* </AuthProvider> */}
         </body>
-        {/* </SessionProvider>   */}
       </html>
-      
-
     </ClerkProvider>
 
   );

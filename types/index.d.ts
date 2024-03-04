@@ -9,6 +9,15 @@ declare type CreateUserParams = {
     lastName: string;
     photo: string;
   };
+  declare type Provider ={
+    id: number;
+    name: string;
+    image: string;
+    available: boolean;
+    staus: string;
+    authType: string;
+    credParams: string[];
+  }
   
   declare type UpdateUserParams = {
     firstName: string;

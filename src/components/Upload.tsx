@@ -5,8 +5,10 @@ import { CiSquarePlus } from 'react-icons/ci';
 import { getSignedURL } from '../lib/helpers/actions/s3.actions';
 import { useUser } from '@clerk/nextjs';
 import axios from 'axios';
+import {Upload} from '@aws-sdk/lib-storage';
+import { S3Client } from '@aws-sdk/client-s3';
 
-const Upload = () => {
+const UploadComponent = () => {
   const { acceptedFiles, getRootProps, getInputProps, isDragActive } = useDropzone();
   const { isSignedIn, user, isLoaded } = useUser();
   const [progress, setProgress] = useState(0);
@@ -29,33 +31,60 @@ const Upload = () => {
 
     if (files) {
       for (const file of files) {
-        const signedUrl = await getSignedURL(file.path || "", username)
-        const url = signedUrl.signedUrl
-        const data = await (file).data
-        await axios.put(url,data,{
-          headers: {
-            "Content-Type": file?.type || "application/octet-stream",
-          },
-          onUploadProgress: (progressEvent) => {
-            const total = progressEvent.total ?? 1;
-            const percentCompleted = Math.round((progressEvent.loaded * 100) / total);
-            setProgress(percentCompleted);
-            console.log(percentCompleted); // Handle the progress event as needed
-          }
-        })
-        console.log("uploaded successfully");
+        const buffer = Buffer.from(await file.data);
+        console.log(buffer);
         
-        // const buffer = Buffer.from(await file.data);
-        // const resp = await fetch("/api/upload", {
-        //   method: "POST",
-        //   body: JSON.stringify({
-        //     file: buffer,
-        //     folder: username,
-        //     filePath: (await file).path,
-        //     fileType: (await file).type,
-        //     fileSize: (await file).size
-        //   })
-        // });
+        
+      const  target = {Bucket: process.env.NEXT_PUBLIC_AWS_BUCKET_NAME, Key: file.name, Body:buffer, ContentType: file.type};
+      try{
+        const parallelUploads3 = new Upload({
+          client: new S3Client({region: 'auto',
+          endpoint: process.env.NEXT_PUBLIC_AWS_ENDPOINT || '',
+          apiVersion:"2012-08-10",
+          credentials: {
+              accessKeyId: process.env.NEXT_PUBLIC_AWS_ACCESS_KEY_ID || '', 
+              secretAccessKey: process.env.NEXT_PUBLIC_AWS_SECRET_ACCESS_KEY || '', 
+          }}),
+          leavePartsOnError: false,
+          params: target,
+          queueSize: 4, // optional concurrency configuration
+          partSize: 1024 * 1024 * 5,
+        });
+        parallelUploads3.on("httpUploadProgress", (progress) => {
+          console.log(progress);
+        });
+        await parallelUploads3.done();
+      }
+      catch(error){
+        console.log(error);
+        
+      }
+      
+      // for (const file of files) {
+        
+      //   const signedUrlResponse = await getSignedURL(file.path || "", username, file.size);
+      //   const parts = signedUrlResponse.parts;
+      //   const uploadId = signedUrlResponse.uploadId;
+
+      //   for (const [partNumber, signedUrl] of Object.entries(parts)) {
+      //     const data = await file.data;
+
+      //     await axios.put(signedUrl, data, {
+      //       headers: {
+      //         "Content-Type": file.type || "application/octet-stream",
+      //       },
+      //       onUploadProgress: (progressEvent) => {
+      //         const total = progressEvent.total ?? 1;
+      //         const percentCompleted = Math.round((progressEvent.loaded * 100) / total);
+      //         setProgress(percentCompleted);
+      //       }
+      //     });
+
+      //     console.log(`Part ${partNumber} uploaded successfully`);
+      //   }
+
+        // Complete multipart upload
+        // Add logic here to complete multipart upload using uploadId
       }
     }
   };
@@ -90,4 +119,4 @@ const Upload = () => {
   )
 }
 
-export default Upload;
+export default UploadComponent;

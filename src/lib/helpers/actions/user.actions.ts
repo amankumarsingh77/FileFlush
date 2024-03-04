@@ -6,6 +6,18 @@ import User from "../database/models/user.model";
 import { connectToDatabase } from "../database/mongo";
 import { handleError } from "../../utils";
 
+interface Creds{
+  accesskey: String,
+  secretaccesskey: String
+}
+
+interface S3Credentials {
+  cloudId:Number,
+  name:string,
+  provider:String,
+  credentials: Creds
+}
+
 // CREATE
 export async function createUser(user: any) {
   try {
@@ -88,6 +100,33 @@ export async function updateCredits(userId: string, creditFee: number) {
 
     return JSON.parse(JSON.stringify(updatedUserCredits));
   } catch (error) {
+    handleError(error);
+  }
+}
+export async function addCloud(userId: string, credentials: S3Credentials){
+  try{
+    await connectToDatabase();
+    
+    
+    const addUserCloud = await User.findOneAndUpdate(
+      { clerkId: userId },
+      { $push: { cloudProviders: credentials } },
+      { new: true }
+    );
+
+    return addUserCloud ? JSON.parse(JSON.stringify(addUserCloud)) : null;
+    
+  } catch(error) {
+    handleError(error);
+  }
+}
+
+export async function getMyCloud(userId: string){
+  try{
+    await connectToDatabase();
+    const userCloud = await User.findOne({ clerkId: userId }, 'cloudProviders');
+    return userCloud ? JSON.parse(JSON.stringify(userCloud)) : null;
+  } catch(error) {
     handleError(error);
   }
 }

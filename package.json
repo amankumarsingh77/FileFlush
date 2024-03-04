@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.515.0",
+    "@aws-sdk/lib-storage": "^3.525.1",
     "@aws-sdk/s3-request-presigner": "^3.515.0",
     "@clerk/nextjs": "^4.29.7",
     "@nextui-org/react": "^2.2.9",
