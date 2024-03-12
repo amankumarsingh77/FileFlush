@@ -28,7 +28,7 @@ export default function SideBar() {
     const [expanded, setExpanded] = useState(false);
     if (pathname != "/") {
         return (
-            <aside className="h-screen">
+            <aside className="h-full">
                 <nav className="h-full inline-flex flex-col bg-white border-r shadow-sm">
                     <div className="p-4 pb-2 flex justify-between items-center">
                         <img

@@ -1,6 +1,6 @@
 "use server"
 
-import { S3Client, CreateMultipartUploadCommand, UploadPartCommand, CompleteMultipartUploadCommand } from "@aws-sdk/client-s3";
+import { S3Client, CreateMultipartUploadCommand, UploadPartCommand, CompleteMultipartUploadCommand, ListObjectsCommand, ListObjectsV2Command } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import fs from 'fs';
 
@@ -12,6 +12,24 @@ const s3 = new S3Client({
         secretAccessKey: process.env.NEXT_PUBLIC_AWS_SECRET_ACCESS_KEY || '', 
     }
 });
+
+
+export async function getUserFiles(username:string){
+    const params = {
+        Bucket: process.env.NEXT_PUBLIC_AWS_BUCKET_NAME,
+        Prefix: username+"/"
+    };
+    const data = await s3.send(new ListObjectsV2Command(params));
+    if(data.Contents){
+        const updateddata= data.Contents.map((data)=>{
+            data.Key = data.Key?.replace(`${username}/`,"")
+
+            return data
+        })
+        return updateddata;
+    }
+    return [];
+}
 
 export async function getSignedURL(filePath: string, folder: string, fileSize:number) {
     const params = {
